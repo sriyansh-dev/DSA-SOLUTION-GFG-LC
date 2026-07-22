@@ -118,8 +118,7 @@ class Solution {
             if (low < high) {                  // need at least two blocks in the window
                 int firstLen = blockEnd[low] - Math.max(blockStart[low], l) + 1;
                 int lastLen  = Math.min(blockEnd[high], r) - blockStart[high] + 1;
-
-                if (high - low == 1) {         // exactly two blocks only
+                if (high - low == 1) {        
                     maxPairSum = firstLen + lastLen;
                 } else {
                     int pair1 = firstLen + blockSize[low + 1];
@@ -130,7 +129,6 @@ class Solution {
             }
             result.add(maxPairSum + activeCount);
         }
-
         return result;
     }
 }
