@@ -87,9 +87,9 @@ Because there is no block of `'1'`s surrounded by `'0'`s, no valid trade is poss
 ## Solution
 
 **Language:** Java  
-**Runtime:** 249 ms (beats 30.00%)  
-**Memory:** 276.1 MB (beats 5.00%)  
-**Submitted:** 2026-07-22T12:06:24.901Z  
+**Runtime:** 246 ms (beats 30.00%)  
+**Memory:** 276 MB (beats 5.00%)  
+**Submitted:** 2026-07-22T12:08:03.476Z  
 
 ```java
 class Solution {
@@ -212,8 +212,7 @@ class Solution {
             if (low < high) {                  // need at least two blocks in the window
                 int firstLen = blockEnd[low] - Math.max(blockStart[low], l) + 1;
                 int lastLen  = Math.min(blockEnd[high], r) - blockStart[high] + 1;
-
-                if (high - low == 1) {         // exactly two blocks only
+                if (high - low == 1) {        
                     maxPairSum = firstLen + lastLen;
                 } else {
                     int pair1 = firstLen + blockSize[low + 1];
@@ -224,7 +223,6 @@ class Solution {
             }
             result.add(maxPairSum + activeCount);
         }
-
         return result;
     }
 }
