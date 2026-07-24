@@ -49,9 +49,9 @@ The possible XOR triplet values are `{6, 7, 8, 9}`. Thus, the output is 4.
 ## Solution
 
 **Language:** Java  
-**Runtime:** 0 ms  
-**Memory:** 42.8 MB  
-**Submitted:** 2026-07-24T10:27:49.940Z  
+**Runtime:** 251 ms (beats 74.55%)  
+**Memory:** 46.8 MB (beats 85.45%)  
+**Submitted:** 2026-07-24T10:28:01.238Z  
 
 ```java
 class Solution {
