@@ -45,8 +45,8 @@ Output: 12
 
 **Language:** Java  
 **Runtime:** 1 ms (beats 66.20%)  
-**Memory:** 44.5 MB (beats 73.61%)  
-**Submitted:** 2026-07-27T03:37:32.999Z  
+**Memory:** 44.5 MB (beats 60.68%)  
+**Submitted:** 2026-07-27T07:12:59.639Z  
 
 ```java
 public class Solution {
