@@ -12,7 +12,6 @@ class Solution {
 
         return result;
     }
-
     public String smallestPalindrome(String s, int k) {
         int n = s.length();
         char[] chars = s.toCharArray();
@@ -69,15 +68,12 @@ class Solution {
                         placedCharacter = true;
                         break;
                     }
-
                     currentK -= ways;
                     count[j]++;
                 }
             }
-
             if (!placedCharacter) return "";
         }
-
         return new String(res);
     }
 }
