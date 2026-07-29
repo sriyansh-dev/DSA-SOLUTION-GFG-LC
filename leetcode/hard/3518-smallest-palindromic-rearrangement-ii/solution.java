@@ -93,14 +93,11 @@ class Solution {
                     }
                     break;
                 }
-
                 currentK -= ways;
                 count[j]++;
             }
-
             if (!placedCharacter) return "";
         }
-
         return new String(res);
     }
 }
