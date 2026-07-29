@@ -58,8 +58,8 @@ Return the  **k-th**   **lexicographically smallest**  palindromic permutation o
 
 **Language:** Java  
 **Runtime:** 7 ms (beats 96.77%)  
-**Memory:** 47 MB (beats 90.32%)  
-**Submitted:** 2026-07-29T09:13:28.150Z  
+**Memory:** 47.1 MB (beats 74.19%)  
+**Submitted:** 2026-07-29T09:38:45.440Z  
 
 ```java
 class Solution {
@@ -157,14 +157,11 @@ class Solution {
                     }
                     break;
                 }
-
                 currentK -= ways;
                 count[j]++;
             }
-
             if (!placedCharacter) return "";
         }
-
         return new String(res);
     }
 }
