@@ -57,9 +57,9 @@ Return the  **k-th**   **lexicographically smallest**  palindromic permutation o
 ## Solution
 
 **Language:** Java  
-**Runtime:** 0 ms  
-**Memory:** 42.9 MB  
-**Submitted:** 2026-07-29T09:08:52.802Z  
+**Runtime:** 13 ms (beats 93.55%)  
+**Memory:** 46.8 MB (beats 93.55%)  
+**Submitted:** 2026-07-29T09:09:08.325Z  
 
 ```java
 class Solution {
