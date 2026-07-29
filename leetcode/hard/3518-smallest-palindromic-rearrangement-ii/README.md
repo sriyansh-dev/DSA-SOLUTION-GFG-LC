@@ -58,8 +58,8 @@ Return the  **k-th**   **lexicographically smallest**  palindromic permutation o
 
 **Language:** Java  
 **Runtime:** 13 ms (beats 93.55%)  
-**Memory:** 46.8 MB (beats 93.55%)  
-**Submitted:** 2026-07-29T09:09:08.325Z  
+**Memory:** 47.2 MB (beats 74.19%)  
+**Submitted:** 2026-07-29T09:10:06.828Z  
 
 ```java
 class Solution {
@@ -76,7 +76,6 @@ class Solution {
 
         return result;
     }
-
     public String smallestPalindrome(String s, int k) {
         int n = s.length();
         char[] chars = s.toCharArray();
@@ -133,15 +132,12 @@ class Solution {
                         placedCharacter = true;
                         break;
                     }
-
                     currentK -= ways;
                     count[j]++;
                 }
             }
-
             if (!placedCharacter) return "";
         }
-
         return new String(res);
     }
 }
