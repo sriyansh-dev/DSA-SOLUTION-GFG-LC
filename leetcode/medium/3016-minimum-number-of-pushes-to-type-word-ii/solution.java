@@ -1,25 +1,19 @@
-import java.util.Arrays;
-
 class Solution {
     public int minimumPushes(String word) {
-        int[] frequency = new int[26];
-        int n = word.length();
+        int[] freq = new int[26];
         
-        // Cache length and use charAt() to avoid O(N) memory allocation overhead
-        for (int i = 0; i < n; i++) {
-            frequency[word.charAt(i) - 'a']++;
+        // .getBytes() is vastly faster than .toCharArray() or .charAt() for ASCII
+        for (byte b : word.getBytes()) {
+            freq[b - 'a']++;
         }
         
-        Arrays.sort(frequency);
+        java.util.Arrays.sort(freq);
         
         int totalPushes = 0;
         
-        for (int i = 25; i >= 0; i--) {
-            if (frequency[i] == 0) break;
-            
-            // Bitwise right shift (>> 3) is mathematically equivalent to division by 8 
-            // but executes slightly faster at the CPU level
-            totalPushes += (((25 - i) >> 3) + 1) * frequency[i];
+        // Fused the condition directly into the loop header to save operations
+        for (int i = 25; i >= 0 && freq[i] > 0; i--) {
+            totalPushes += ((25 - i) / 8 + 1) * freq[i];
         }
         
         return totalPushes;
