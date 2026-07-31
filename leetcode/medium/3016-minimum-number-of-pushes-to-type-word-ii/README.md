@@ -77,33 +77,33 @@ It can be shown that no other mapping can provide a lower cost.
 ## Solution
 
 **Language:** Java  
-**Runtime:** 9 ms (beats 94.22%)  
-**Memory:** 47.9 MB (beats 87.86%)  
-**Submitted:** 2026-07-31T03:43:04.813Z  
+**Runtime:** 10 ms (beats 66.76%)  
+**Memory:** 48.1 MB (beats 32.08%)  
+**Submitted:** 2026-07-31T03:44:06.981Z  
 
 ```java
 import java.util.Arrays;
 
 class Solution {
     public int minimumPushes(String word) {
-        // Frequency array to store count of each letter
         int[] frequency = new int[26];
+        int n = word.length();
         
-        // Count occurrences of each letter
-        for (char c : word.toCharArray()) {
-            frequency[c - 'a']++;
+        // Cache length and use charAt() to avoid O(N) memory allocation overhead
+        for (int i = 0; i < n; i++) {
+            frequency[word.charAt(i) - 'a']++;
         }
         
-        // Sort frequencies in ascending order
         Arrays.sort(frequency);
         
         int totalPushes = 0;
         
-        // Calculate total number of presses by iterating from the end (descending order)
         for (int i = 25; i >= 0; i--) {
             if (frequency[i] == 0) break;
-            // (25 - i) mimics the 0-indexed position in a descending array
-            totalPushes += ((25 - i) / 8 + 1) * frequency[i];
+            
+            // Bitwise right shift (>> 3) is mathematically equivalent to division by 8 
+            // but executes slightly faster at the CPU level
+            totalPushes += (((25 - i) >> 3) + 1) * frequency[i];
         }
         
         return totalPushes;
