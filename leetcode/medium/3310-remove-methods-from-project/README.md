@@ -61,9 +61,9 @@ All methods are suspicious. We can remove them.
 ## Solution
 
 **Language:** Java  
-**Runtime:** 187 ms (beats 6.73%)  
-**Memory:** 290.8 MB (beats 38.46%)  
-**Submitted:** 2026-08-05T05:48:21.473Z  
+**Runtime:** 186 ms (beats 6.73%)  
+**Memory:** 290.5 MB (beats 40.39%)  
+**Submitted:** 2026-08-05T05:53:10.021Z  
 
 ```java
 class Solution {
