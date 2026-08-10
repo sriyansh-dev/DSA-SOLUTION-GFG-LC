@@ -49,26 +49,26 @@ Explanation: n is already a perfect square, Alice can win with one move, removin
 ## Solution
 
 **Language:** Java  
-**Runtime:** 14 ms (beats 91.38%)  
-**Memory:** 42.4 MB (beats 78.33%)  
-**Submitted:** 2026-08-10T04:51:26.902Z  
+**Runtime:** 18 ms (beats 57.96%)  
+**Memory:** 42.3 MB (beats 90.34%)  
+**Submitted:** 2026-08-10T04:52:09.372Z  
 
 ```java
 class Solution {
     public boolean winnerSquareGame(int n) {
-        boolean[] dp = new boolean[n + 1];
+        long[] dp = new long[(n >> 6) + 1];
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j * j <= i; j++) {
-                if (!dp[i - j * j]) {
-                    dp[i] = true;
+                int prev = i - j * j;
+                if ((dp[prev >> 6] & (1L << (prev & 63))) == 0) {
+                    dp[i >> 6] |= (1L << (i & 63));
                     break;
                 }
             }
         }
-        return dp[n];
+        return (dp[n >> 6] & (1L << (n & 63))) != 0;
     }
 }
-
 ```
 
 ---
