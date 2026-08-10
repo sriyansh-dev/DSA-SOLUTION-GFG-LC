@@ -49,21 +49,17 @@ Explanation: n is already a perfect square, Alice can win with one move, removin
 ## Solution
 
 **Language:** Java  
-**Runtime:** 15 ms (beats 64.49%)  
-**Memory:** 42.5 MB (beats 68.41%)  
-**Submitted:** 2026-08-10T04:50:09.920Z  
+**Runtime:** 14 ms (beats 91.38%)  
+**Memory:** 42.4 MB (beats 78.33%)  
+**Submitted:** 2026-08-10T04:51:26.902Z  
 
 ```java
 class Solution {
     public boolean winnerSquareGame(int n) {
         boolean[] dp = new boolean[n + 1];
-        int maxRoot = (int) Math.sqrt(n);
-        int[] sq = new int[maxRoot + 1];
-        for (int k = 1; k <= maxRoot; k++) sq[k] = k * k;
-
         for (int i = 1; i <= n; i++) {
-            for (int k = 1; k <= maxRoot && sq[k] <= i; k++) {
-                if (!dp[i - sq[k]]) {
+            for (int j = 1; j * j <= i; j++) {
+                if (!dp[i - j * j]) {
                     dp[i] = true;
                     break;
                 }
