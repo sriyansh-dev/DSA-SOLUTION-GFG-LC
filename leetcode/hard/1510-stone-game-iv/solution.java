@@ -1,14 +1,15 @@
 class Solution {
     public boolean winnerSquareGame(int n) {
-        boolean[] dp = new boolean[n + 1];
+        long[] dp = new long[(n >> 6) + 1];
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j * j <= i; j++) {
-                if (!dp[i - j * j]) {
-                    dp[i] = true;
+                int prev = i - j * j;
+                if ((dp[prev >> 6] & (1L << (prev & 63))) == 0) {
+                    dp[i >> 6] |= (1L << (i & 63));
                     break;
                 }
             }
         }
-        return dp[n];
+        return (dp[n >> 6] & (1L << (n & 63))) != 0;
     }
 }
