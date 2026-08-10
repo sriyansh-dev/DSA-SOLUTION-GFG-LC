@@ -50,24 +50,27 @@ Explanation: n is already a perfect square, Alice can win with one move, removin
 
 **Language:** Java  
 **Runtime:** 15 ms (beats 64.49%)  
-**Memory:** 42 MB (beats 97.91%)  
-**Submitted:** 2026-08-10T04:38:56.123Z  
+**Memory:** 42.3 MB (beats 90.34%)  
+**Submitted:** 2026-08-10T04:43:27.154Z  
 
 ```java
 class Solution {
-  public boolean winnerSquareGame(int n) {
-    // dp[i] := the winning result for n = i
-    boolean[] dp = new boolean[n + 1];
+    public boolean winnerSquareGame(int n) {
+        boolean[] dp = new boolean[n + 1];
+        int maxRoot = (int) Math.sqrt(n);
+        int[] sq = new int[maxRoot + 1];
+        for (int k = 1; k <= maxRoot; k++) sq[k] = k * k;
 
-    for (int i = 1; i <= n; ++i)
-      for (int j = 1; j * j <= i; ++j)
-        if (!dp[i - j * j]) { // Removing j^2 stones make the opponent lose.
-          dp[i] = true;       // So, we win.
-          break;
+        for (int i = 1; i <= n; i++) {
+            for (int k = 1; k <= maxRoot && sq[k] <= i; k++) {
+                if (!dp[i - sq[k]]) {
+                    dp[i] = true;
+                    break;
+                }
+            }
         }
-
-    return dp[n];
-  }
+        return dp[n];
+    }
 }
 
 ```
