@@ -1,27 +1,24 @@
-import java.util.Arrays;
+import java.util.HashMap;
 
 class Solution {
     public int maxSubarrayLength(int[] nums, int k) {
         int n = nums.length;
 
-        // Compress values into a dense range [0, m) using a sorted+deduped array
-        int[] sortedUnique = nums.clone();
-        Arrays.sort(sortedUnique);
-        int m = 0;
-        for (int i = 0; i < n; i++) {
-            if (i == 0 || sortedUnique[i] != sortedUnique[i - 1]) {
-                sortedUnique[m++] = sortedUnique[i];
-            }
-        }
-
-        // Map every element to its compressed index (one binary search each, done once)
+        // Compress each value to a dense index in ONE pass — O(n), no sorting
+        HashMap<Integer, Integer> idMap = new HashMap<>();
         int[] compressed = new int[n];
+        int nextId = 0;
         for (int i = 0; i < n; i++) {
-            compressed[i] = Arrays.binarySearch(sortedUnique, 0, m, nums[i]);
+            Integer id = idMap.get(nums[i]);
+            if (id == null) {
+                id = nextId++;
+                idMap.put(nums[i], id);
+            }
+            compressed[i] = id;
         }
 
-        // Sliding window now runs on a plain int[] — no boxing, no hashing
-        int[] freq = new int[m];
+        // Sliding window on a plain int[] — zero boxing, zero hashing here
+        int[] freq = new int[nextId];
         int left = 0, maxLength = 0;
 
         for (int right = 0; right < n; right++) {
