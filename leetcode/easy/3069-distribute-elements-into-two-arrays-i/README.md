@@ -51,32 +51,38 @@ Hence, the array result formed by concatenation is [5,3,4,8].
 
 ## Solution
 
-**Language:** C++  
-**Runtime:** 0 ms (beats 100.00%)  
-**Memory:** 23.9 MB (beats 66.37%)  
-**Submitted:** 2026-08-20T17:33:08.459Z  
+**Language:** Java  
+**Runtime:** 4 ms (beats 8.65%)  
+**Memory:** 46.2 MB (beats 98.56%)  
+**Submitted:** 2026-08-20T17:34:59.310Z  
 
-```cpp
+```java
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
-public:
-    vector<int> resultArray(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> arr1, arr2;
-        arr1.push_back(nums[0]);
-        arr2.push_back(nums[1]);
+    public int[] resultArray(int[] nums) {
+        int n = nums.length;
+        List<Integer> arr1 = new ArrayList<>();
+        List<Integer> arr2 = new ArrayList<>();
+        arr1.add(nums[0]);
+        arr2.add(nums[1]);
         for (int i = 2; i < n; i++) {
-            if (arr1.back() > arr2.back()) {
-                arr1.push_back(nums[i]);
+            if (arr1.get(arr1.size() - 1) > arr2.get(arr2.size() - 1)) {
+                arr1.add(nums[i]);
             } else {
-                arr2.push_back(nums[i]);
+                arr2.add(nums[i]);
             }
+        }        
+        arr1.addAll(arr2);
+        int[] result = new int[arr1.size()];
+        for (int i = 0; i < arr1.size(); i++) {
+            result[i] = arr1.get(i);
         }
-        arr1.insert(arr1.end(), arr2.begin(), arr2.end());
-        return arr1;
+        
+        return result;
     }
-};
-
-
+}
 ```
 
 ---
