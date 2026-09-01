@@ -69,9 +69,9 @@ No valid path collects all `'L'`.
 ## Solution
 
 **Language:** Java  
-**Runtime:** 886 ms (beats 14.28%)  
-**Memory:** 285.4 MB (beats 9.52%)  
-**Submitted:** 2026-09-01T18:27:20.804Z  
+**Runtime:** 335 ms (beats 69.05%)  
+**Memory:** 147 MB (beats 69.05%)  
+**Submitted:** 2026-09-01T18:28:43.724Z  
 
 ```java
 import java.util.*;
@@ -79,48 +79,84 @@ import java.util.*;
 class Solution {
     public int minMoves(String[] g, int energy) {
         int m = g.length, n = g[0].length();
-        int sr = 0, sc = 0, bit = 0, full = 0;
-        int[][] litter = new int[10][2];
+        int sr = 0, sc = 0, bit = 0;
+        int[] litterBitOf = new int[m * n];
+        Arrays.fill(litterBitOf, -1);
 
-        for (int r = 0; r < m; r++)
+        for (int r = 0; r < m; r++) {
             for (int c = 0; c < n; c++) {
                 char ch = g[r].charAt(c);
                 if (ch == 'S') { sr = r; sc = c; }
-                else if (ch == 'L') litter[bit++] = new int[]{r, c};
+                else if (ch == 'L') litterBitOf[r * n + c] = bit++;
             }
-        full = (1 << bit) - 1;
+        }
+
+        int full = (1 << bit) - 1;
         if (full == 0) return 0;
 
-        boolean[][][] seen = new boolean[m * n][energy + 1][full + 1];
-        Deque<int[]> q = new ArrayDeque<>();
-        q.add(new int[]{sr, sc, energy, 0});
-        seen[sr * n + sc][energy][0] = true;
-        int[] d = {-1, 1, 0, 0, 0, 0, -1, 1}; 
+        int maskCnt = full + 1;
+        int energyCnt = energy + 1;
+        int cellStride = energyCnt * maskCnt; // per cell
+        int total = m * n * cellStride;
+
+        boolean[] seen = new boolean[total];
+
+        int[] queue = new int[1 << 16];
+        int head = 0, tail = 0, size = 0;
+
+        int startIdx = (sr * n + sc) * cellStride + energy * maskCnt + 0;
+        queue[tail++] = startIdx;
+        size++;
+        seen[startIdx] = true;
+
+        int[] dr = {-1, 1, 0, 0};
+        int[] dc = {0, 0, -1, 1};
         int moves = 0;
 
-        while (!q.isEmpty()) {
-            for (int i = q.size(); i > 0; i--) {
-                int[] s = q.poll();
-                int r = s[0], c = s[1], e = s[2], mask = s[3];
+        while (size > 0) {
+            int levelSize = size;
+            for (int i = 0; i < levelSize; i++) {
+                int idx = queue[head++];
+                if (head == queue.length) head = 0;
+                size--;
+
+                int mask = idx % maskCnt;
+                int t1 = idx / maskCnt;
+                int e = t1 % energyCnt;
+                int cellId = t1 / energyCnt;
+                int r = cellId / n, c = cellId % n;
+
                 if (mask == full) return moves;
                 if (e == 0) continue;
 
-                int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
-                for (int[] dir : dirs) {
-                    int nr = r + dir[0], nc = c + dir[1];
+                for (int k = 0; k < 4; k++) {
+                    int nr = r + dr[k], nc = c + dc[k];
                     if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+
                     char ch = g[nr].charAt(nc);
                     if (ch == 'X') continue;
 
-                    int ne = ch == 'R' ? energy : e - 1;
-                    int nm = mask;
-                    for (int b = 0; b < bit; b++)
-                        if (litter[b][0] == nr && litter[b][1] == nc) nm |= (1 << b);
+                    int ne = (ch == 'R') ? energy : e - 1;
+                    int nCellId = nr * n + nc;
+                    int litBit = litterBitOf[nCellId];
+                    int nm = (litBit == -1) ? mask : (mask | (1 << litBit));
 
-                    int id = nr * n + nc;
-                    if (!seen[id][ne][nm]) {
-                        seen[id][ne][nm] = true;
-                        q.add(new int[]{nr, nc, ne, nm});
+                    int nIdx = nCellId * cellStride + ne * maskCnt + nm;
+                    if (!seen[nIdx]) {
+                        seen[nIdx] = true;
+                        // grow queue if full
+                        if (size == queue.length) {
+                            int[] bigger = new int[queue.length * 2];
+                            int n1 = queue.length - head;
+                            System.arraycopy(queue, head, bigger, 0, n1);
+                            System.arraycopy(queue, 0, bigger, n1, tail);
+                            queue = bigger;
+                            head = 0;
+                            tail = size;
+                        }
+                        queue[tail++] = nIdx;
+                        if (tail == queue.length) tail = 0;
+                        size++;
                     }
                 }
             }
