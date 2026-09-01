@@ -1,71 +1,55 @@
 import java.util.*;
 
 class Solution {
-    public int minMoves(String[] classroom, int energy) {
-        int m = classroom.length;
-        int n = classroom[0].length();
+    public int minMoves(String[] g, int energy) {
+        int m = g.length, n = g[0].length();
+        int sr = 0, sc = 0, bit = 0, full = 0;
+        int[][] litter = new int[10][2];
 
-        int sr = -1, sc = -1;
-        Map<Integer, Integer> litterBit = new HashMap<>(); // cellId -> bit index
-        int litterCount = 0;
-
-        for (int r = 0; r < m; r++) {
+        for (int r = 0; r < m; r++)
             for (int c = 0; c < n; c++) {
-                char ch = classroom[r].charAt(c);
-                if (ch == 'S') {
-                    sr = r; sc = c;
-                } else if (ch == 'L') {
-                    litterBit.put(r * n + c, litterCount++);
-                }
+                char ch = g[r].charAt(c);
+                if (ch == 'S') { sr = r; sc = c; }
+                else if (ch == 'L') litter[bit++] = new int[]{r, c};
             }
-        }
+        full = (1 << bit) - 1;
+        if (full == 0) return 0;
 
-        int fullMask = (1 << litterCount) - 1;
-        if (fullMask == 0) return 0;
-
-        // visited[cellId][energy][mask]
-        boolean[][][] visited = new boolean[m * n][energy + 1][fullMask + 1];
-
-        Deque<int[]> queue = new ArrayDeque<>(); // {r, c, e, mask}
-        queue.add(new int[]{sr, sc, energy, 0});
-        visited[sr * n + sc][energy][0] = true;
-
-        int[] dr = {-1, 1, 0, 0};
-        int[] dc = {0, 0, -1, 1};
-
+        boolean[][][] seen = new boolean[m * n][energy + 1][full + 1];
+        Deque<int[]> q = new ArrayDeque<>();
+        q.add(new int[]{sr, sc, energy, 0});
+        seen[sr * n + sc][energy][0] = true;
+        int[] d = {-1, 1, 0, 0, 0, 0, -1, 1}; 
         int moves = 0;
 
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                int[] cur = queue.poll();
-                int r = cur[0], c = cur[1], e = cur[2], mask = cur[3];
-
-                if (mask == fullMask) return moves;
+        while (!q.isEmpty()) {
+            for (int i = q.size(); i > 0; i--) {
+                int[] s = q.poll();
+                int r = s[0], c = s[1], e = s[2], mask = s[3];
+                if (mask == full) return moves;
                 if (e == 0) continue;
 
-                for (int d = 0; d < 4; d++) {
-                    int nr = r + dr[d], nc = c + dc[d];
+                int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
+                for (int[] dir : dirs) {
+                    int nr = r + dir[0], nc = c + dir[1];
                     if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
-
-                    char ch = classroom[nr].charAt(nc);
+                    char ch = g[nr].charAt(nc);
                     if (ch == 'X') continue;
 
-                    int newE = (ch == 'R') ? energy : e - 1;
-                    int newMask = mask;
-                    Integer bit = litterBit.get(nr * n + nc);
-                    if (bit != null) newMask |= (1 << bit);
+                    int ne = ch == 'R' ? energy : e - 1;
+                    int nm = mask;
+                    for (int b = 0; b < bit; b++)
+                        if (litter[b][0] == nr && litter[b][1] == nc) nm |= (1 << b);
 
-                    int cellId = nr * n + nc;
-                    if (!visited[cellId][newE][newMask]) {
-                        visited[cellId][newE][newMask] = true;
-                        queue.add(new int[]{nr, nc, newE, newMask});
+                    int id = nr * n + nc;
+                    if (!seen[id][ne][nm]) {
+                        seen[id][ne][nm] = true;
+                        q.add(new int[]{nr, nc, ne, nm});
                     }
                 }
             }
             moves++;
         }
-
         return -1;
     }
 }
