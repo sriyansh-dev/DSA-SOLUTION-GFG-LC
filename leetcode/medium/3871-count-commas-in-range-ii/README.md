@@ -45,16 +45,18 @@ The numbers `"1,000"`, `"1,001"`, and `"1,002"` each contain one comma, giving a
 
 **Language:** Java  
 **Runtime:** 1 ms (beats 99.36%)  
-**Memory:** 42.7 MB (beats 56.41%)  
-**Submitted:** 2026-09-09T17:55:05.211Z  
+**Memory:** 42.4 MB (beats 85.26%)  
+**Submitted:** 2026-09-09T17:58:17.824Z  
 
 ```java
 class Solution {
     public long countCommas(long n) {
         long ans = 0;
-        for (long x = 1000; x <= n; x *= 1000) {
-            ans += n - x + 1;
-        }
+        if (n >= 1000L)                 ans += n - 1000L + 1;
+        if (n >= 1000000L)              ans += n - 1000000L + 1;
+        if (n >= 1000000000L)           ans += n - 1000000000L + 1;
+        if (n >= 1000000000000L)        ans += n - 1000000000000L + 1;
+        if (n >= 1000000000000000L)     ans += n - 1000000000000000L + 1;
         return ans;
     }
 }
