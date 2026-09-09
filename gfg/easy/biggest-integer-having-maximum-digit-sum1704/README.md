@@ -25,7 +25,7 @@ Explanation: 89 gives us the largest digit sum in the range from 1 to n. Hence t
 **Language:** Java  
 **Runtime:** N/A  
 **Memory:** N/A  
-**Submitted:** 2026-09-09T17:29:56.718Z  
+**Submitted:** 2026-09-09T17:30:06.865Z  
 
 ```java
 class Solution {
@@ -36,7 +36,6 @@ class Solution {
         int bestNum = n;
         int maxSum = getSum(n);
 
-        // Try reducing each digit from left to right and setting the rest to '9'
         for (int i = 0; i < len; i++) {
             char[] arr = s.toCharArray();
 
