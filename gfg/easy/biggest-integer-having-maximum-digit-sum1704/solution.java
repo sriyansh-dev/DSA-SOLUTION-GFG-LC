@@ -6,7 +6,6 @@ class Solution {
         int bestNum = n;
         int maxSum = getSum(n);
 
-        // Try reducing each digit from left to right and setting the rest to '9'
         for (int i = 0; i < len; i++) {
             char[] arr = s.toCharArray();
 
