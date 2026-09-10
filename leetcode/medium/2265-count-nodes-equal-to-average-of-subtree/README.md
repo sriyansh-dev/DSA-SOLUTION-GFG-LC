@@ -46,9 +46,9 @@ Explanation: For the node with value 1: The average of its subtree is 1 / 1 = 1.
 ## Solution
 
 **Language:** Java  
-**Runtime:** 1 ms (beats 56.32%)  
-**Memory:** 45.3 MB (beats 82.16%)  
-**Submitted:** 2026-09-10T17:48:07.058Z  
+**Runtime:** 0 ms (beats 100.00%)  
+**Memory:** 45.7 MB (beats 24.23%)  
+**Submitted:** 2026-09-10T17:48:42.997Z  
 
 ```java
 /**
