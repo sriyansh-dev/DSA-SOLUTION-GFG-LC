@@ -3,9 +3,9 @@ class Solution {
      * Determines if two rectangles overlap.
      * Each rectangle is represented by its bottom-left and top-right corners.
      * 
-     * @param rec1 
-     * @param rec2 
-     * @return
+     *
+     *
+     * 
      */
     public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
         
