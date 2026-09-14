@@ -49,8 +49,8 @@ Output: false
 
 **Language:** Java  
 **Runtime:** 0 ms (beats 100.00%)  
-**Memory:** 42.7 MB (beats 52.92%)  
-**Submitted:** 2026-09-14T17:03:20.075Z  
+**Memory:** 42.8 MB (beats 33.30%)  
+**Submitted:** 2026-09-14T17:04:06.275Z  
 
 ```java
 class Solution {
@@ -58,9 +58,9 @@ class Solution {
      * Determines if two rectangles overlap.
      * Each rectangle is represented by its bottom-left and top-right corners.
      * 
-     * @param rec1 
-     * @param rec2 
-     * @return
+     *
+     *
+     * 
      */
     public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
         
