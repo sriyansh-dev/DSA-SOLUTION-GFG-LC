@@ -48,8 +48,8 @@ Output: true
 
 **Language:** Java  
 **Runtime:** 0 ms (beats 100.00%)  
-**Memory:** 42.1 MB (beats 60.50%)  
-**Submitted:** 2026-09-19T18:24:38.521Z  
+**Memory:** 42 MB (beats 77.31%)  
+**Submitted:** 2026-09-19T18:32:53.288Z  
 
 ```java
 class Solution {
